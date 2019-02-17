@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/robo-stars-war/precache-manifest.e03bea9aeeb720318f53776b7d828c53.js"
+  "/robo-stars-war/precache-manifest.14aee16ef140f737899ab0f3d94c91cb.js"
 );
 
 workbox.clientsClaim();

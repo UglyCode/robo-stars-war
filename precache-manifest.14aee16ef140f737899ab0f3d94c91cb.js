@@ -16,15 +16,15 @@ self.__precacheManifest = [
     "url": "/robo-stars-war/static/js/runtime~main.6b625a58.js"
   },
   {
-    "revision": "e961c350b28692dbd68e",
-    "url": "/robo-stars-war/static/js/main.e961c350.chunk.js"
+    "revision": "c473bcfcfa5b8096d109",
+    "url": "/robo-stars-war/static/js/main.c473bcfc.chunk.js"
   },
   {
     "revision": "d1402e48347a4072ed72",
     "url": "/robo-stars-war/static/js/2.d1402e48.chunk.js"
   },
   {
-    "revision": "e961c350b28692dbd68e",
+    "revision": "c473bcfcfa5b8096d109",
     "url": "/robo-stars-war/static/css/main.4a193a7c.chunk.css"
   },
   {
@@ -32,7 +32,7 @@ self.__precacheManifest = [
     "url": "/robo-stars-war/static/css/2.5478547b.chunk.css"
   },
   {
-    "revision": "767bb0c9c3063cc1787098f429cb40c1",
+    "revision": "557282c43bcd256e6bee346a1548ba2b",
     "url": "/robo-stars-war/index.html"
   }
 ];
