@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import './App.css';
 import Robots from './Robots';
 import Posts from './Posts';
+import ErrorBoundry from './ErrorBoundry'
+
 
 class App extends Component {
     constructor(props) {
@@ -28,7 +30,9 @@ class App extends Component {
         return (
             <div className='tc'>
                 <header><h1 className='f1'>ROBO-STARS WAR</h1></header>
-                {currentPage}
+                <ErrorBoundry>
+                    {currentPage}
+                </ErrorBoundry>
             </div>
         );
     };
