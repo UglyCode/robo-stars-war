@@ -1,4 +1,4 @@
-import React, {components} from 'react';
+import React from 'react';
 import Description from './DecriptionRow';
 
 const Card = ({name, description, id, cardClick, helperText}) => {

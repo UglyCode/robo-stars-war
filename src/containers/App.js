@@ -25,7 +25,7 @@ class App extends Component {
 
         let currentPage = this.state.currentRobot ?
             <Posts backOnClick={this.backOnClick} currentRobot={this.state.currentRobot}/> :
-            <Robots cardClick={this.cardOnClick}/>;
+            <Robots store={this.props.store} cardClick={this.cardOnClick}/>;
 
         return (
             <div className='tc'>

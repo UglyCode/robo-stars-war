@@ -1,4 +1,4 @@
-import React, {components} from 'react';
+import React from 'react';
 
 const DescriptionRow = ({name, value}) => {
 

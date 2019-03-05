@@ -1,8 +1,23 @@
 import React, {Component} from 'react';
+import {connect} from "react-redux";
+import {setSearchField} from "../actions";
 import CardList from "../components/CardList";
 import Searchbox from '../components/Searchbox';
 import AmountBox from '../components/AmountBox';
 import Scroll from '../components/Scroll'
+
+const mapStateToProps = state =>{
+    return {
+        searchField: state.searchField
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+    };
+};
+
 
 class Robots extends Component {
     constructor(props) {
@@ -10,7 +25,6 @@ class Robots extends Component {
         this.state = {
             swapiUsersCache: [],
             actualRobots: [],
-            searchfield: '',
             cardsAmount: 10
         }
     }
@@ -42,14 +56,8 @@ class Robots extends Component {
 
         this._updateSwapiUsers(this.state.cardsAmount);
 
-        // fetch('https://jsonplaceholder.typicode.com/users')
-        //     .then(response => response.json())
-        //     .then(users => this.setState({robots: users}));
     }
 
-    onSearchChange = (event) => {
-        this.setState({searchfield: event.target.value});
-    };
 
     onAmountChange = (event) => {
         const amount = event.target.value;
@@ -59,9 +67,10 @@ class Robots extends Component {
 
 
     render() {
-        const {actualRobots, searchfield, cardsAmount}  = this.state;
+        const { actualRobots, cardsAmount }  = this.state;
+        const { searchField, onSearchChange } =  this.props;
         const filteredRobo = actualRobots.filter(robo => {
-            return robo.name && robo.name.toLowerCase().includes(searchfield)
+            return robo.name && robo.name.toLowerCase().includes(searchField)
         });
         if (!actualRobots.length){
             return <h1 className='tc'>Loading</h1>
@@ -69,7 +78,7 @@ class Robots extends Component {
         return (
             <div>
                 <div>
-                    <Searchbox searchChange={this.onSearchChange}/>
+                    <Searchbox searchChange={onSearchChange}/>
                     <AmountBox amountChange={this.onAmountChange} amount={cardsAmount}/>
                 </div>
                 <Scroll>
@@ -81,4 +90,4 @@ class Robots extends Component {
 }
 
 
-export default Robots;
+export default connect(mapStateToProps, mapDispatchToProps)(Robots);
