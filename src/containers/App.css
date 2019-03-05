@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'SEGA LOGO FONT';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SEGA LOGO FONT'), url('SEGA.woff') format('woff');
+}
+
+@font-face {font-family:"STARWARS";src:url("STARWARS.woff") format("woff");font-weight:normal;font-style:normal;}
+
+
+
+body{
+    background: url('../star-background-star-wars-7.jpg');
+    background-size: cover;
+}
+
+h1{
+    font-family: 'STARWARS';
+    color: yellow;
+    transform: skew(-45deg);
+    width: 500px;
+}
+
+header{
+    width: 500px;
+    margin: 0 auto;
+}
