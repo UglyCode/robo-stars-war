@@ -6,17 +6,11 @@ import Searchbox from '../components/Searchbox';
 import AmountBox from '../components/AmountBox';
 import Scroll from '../components/Scroll'
 
-const mapStateToProps = state =>{
-    return {
-        searchField: state.searchField
-    }
-};
+const mapStateToProps = state =>({searchField: state.searchField});
 
-const mapDispatchToProps = dispatch => {
-    return {
+const mapDispatchToProps = dispatch => ({
         onSearchChange: (event) => dispatch(setSearchField(event.target.value))
-    };
-};
+});
 
 
 class Robots extends Component {
