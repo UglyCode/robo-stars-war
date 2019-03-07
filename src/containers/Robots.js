@@ -1,15 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {setSearchField} from "../actions";
+import { setSearchField, requestRobots } from "../actions";
 import CardList from "../components/CardList";
 import Searchbox from '../components/Searchbox';
 import AmountBox from '../components/AmountBox';
 import Scroll from '../components/Scroll'
 
-const mapStateToProps = state =>({searchField: state.searchField});
+const mapStateToProps = state =>({
+    searchField: state.searchRobots.searchField,
+    robots: state.requestRobots.robots,
+    isPending: state.requestRobots.isPending,
+    error: state.requestRobots.error
+});
 
 const mapDispatchToProps = dispatch => ({
-        onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+        onRequestRobots: () => dispatch(requestRobots)
 });
 
 
