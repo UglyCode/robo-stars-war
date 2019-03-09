@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import { setSearchField, requestRobots } from "../actions";
+import { setSearchField, getRequestedRobots, setCardsAmount } from "../actions";
 import CardList from "../components/CardList";
 import Searchbox from '../components/Searchbox';
 import AmountBox from '../components/AmountBox';
@@ -8,73 +8,53 @@ import Scroll from '../components/Scroll'
 
 const mapStateToProps = state =>({
     searchField: state.searchRobots.searchField,
-    robots: state.requestRobots.robots,
     isPending: state.requestRobots.isPending,
-    error: state.requestRobots.error
+    error: state.requestRobots.error,
+    swapiUsersCache: state.requestRobots.swapiUsersCache,
+    cardsAmount: state.changeCardsAmount.cardsAmount
 });
 
 const mapDispatchToProps = dispatch => ({
         onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-        onRequestRobots: () => dispatch(requestRobots)
+        onRequestRobots: (from, to) => dispatch(getRequestedRobots(from, to)),
+        onCardsAmountChange: (event) => dispatch(setCardsAmount(event.target.value))
 });
 
 
 class Robots extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            swapiUsersCache: [],
-            actualRobots: [],
-            cardsAmount: 10
-        }
     }
 
-    async _updateSwapiUsers(amount){
-        const cardsAmount = Math.min(Math.max(amount, 5),25);
-        const {swapiUsersCache} = this.state;
-
-        let fetchArr =[];
-        const cacheLength = swapiUsersCache.length;
-
-        if (cacheLength < cardsAmount) {
-
-            for (let i = cacheLength; i < cardsAmount; i++){
-                fetchArr.push(fetch(`https://swapi.co/api/people/${i+1}`)); //0 elem not defined at wsapi
-            }
-
-            let swapiArr = await Promise.all(fetchArr);
-            swapiArr = await Promise.all(swapiArr.map( elem => elem.json()));
-            swapiArr.forEach(elem => swapiUsersCache.push(elem));
-
-            this.setState({ swapiUsersCache: swapiUsersCache});
-        }
-
-        this.setState({actualRobots: swapiUsersCache.slice(0,cardsAmount)});
+    updateSwapiUsers(){
+        console.log('updateSwapiUsers', this.props.swapiUsersCache.length, this.props.cardsAmount);
+        this.props.onRequestRobots(this.props.swapiUsersCache.length, this.props.cardsAmount);
     }
+
 
     componentDidMount(){
-
-        this._updateSwapiUsers(this.state.cardsAmount);
-
+        this.updateSwapiUsers()
     }
 
-
     onAmountChange = (event) => {
-        const amount = event.target.value;
-        this.setState({cardsAmount: amount});
-        this._updateSwapiUsers(amount);
+        this.props.onCardsAmountChange(event)
+        this.updateSwapiUsers();
     };
 
 
     render() {
-        const { actualRobots, cardsAmount }  = this.state;
-        const { searchField, onSearchChange } =  this.props;
-        const filteredRobo = actualRobots.filter(robo => {
-            return robo.name && robo.name.toLowerCase().includes(searchField)
+        const { searchField, onSearchChange, cardsAmount, swapiUsersCache, isPending, error} =  this.props;
+        const filteredRobo = swapiUsersCache.filter((robo, i)=> {
+            return i < cardsAmount && robo.name && robo.name.toLowerCase().includes(searchField)
         });
-        if (!actualRobots.length){
+
+        if (isPending){
             return <h1 className='tc'>Loading</h1>
+        } else if (error.name) {
+            console.log(error);
+            return <h1 className='tc'>error.name</h1>
         }
+
         return (
             <div>
                 <div>
